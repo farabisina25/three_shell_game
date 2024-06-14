@@ -14,6 +14,18 @@ public class ShellMovement : MonoBehaviour
         _mugs.ForEach(x => x.OnReset());
     }
 
+    public Mug findBallMug()
+    {
+        for (int i = 0; i < _mugs.Count; i++)
+        {
+            if (_mugs[i].HasBall == true)
+            {
+                return _mugs[i];
+            }
+        }
+
+        return null;
+    }
 
     public Tween PrepareBall(Ball ball)
     {

@@ -61,9 +61,9 @@ namespace DefaultNamespace
             return _addBallSequence;
         }
 
-        public void Clicked()
+        public Tween Clicked()
         {
-            Move(CopyWithY(mugHolder.position, 30), 1);
+            return Move(CopyWithY(mugHolder.position, 30), 1);
         }
     }
 }

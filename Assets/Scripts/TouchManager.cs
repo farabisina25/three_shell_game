@@ -1,10 +1,13 @@
+using Cysharp.Threading.Tasks;
 using DefaultNamespace;
+using DG.Tweening;
 using UnityEngine;
 
 public class TouchManager : MonoBehaviour
 {
     public Ball ball;
     public GameManager game;
+    public ShellMovement shells;
 
     void Update()
     {
@@ -29,9 +32,16 @@ public class TouchManager : MonoBehaviour
         }
     }
 
-    void OnObjectClicked(Mug mug)
+    public async UniTaskVoid OnObjectClicked(Mug mug)
     {
-        mug.Clicked();
+        await mug.Clicked().AsyncWaitForCompletion();
+        Mug temp = shells.findBallMug();
+        if (temp != mug)
+        {
+            await mug.Move( new Vector3(mug.transform.position.x, 0 , mug.transform.position.z), 1).AsyncWaitForCompletion();
+            await temp.Clicked().AsyncWaitForCompletion();
+        }
+        
         if (Mathf.Approximately(ball.transform.position.x, mug.Position.x))
         {
             game.Success();
