@@ -1,57 +1,37 @@
-using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using DefaultNamespace;
 using DG.Tweening;
+using UnityEngine;
+
 public class ShellMovement : MonoBehaviour
 {
-    public ShellMovement1 shell1;
-    public ShellMovement2 shell2;
-    
-    public Vector3 startposition;
-    public Vector3 shell1position;
-    public Vector3 shell2position;
-    public bool up = false;
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<Mug> _mugs = new();
+
+    public void ResetMugs()
     {
-        startposition = transform.position;
-        shell1position = shell1.transform.position;
-        shell2position = shell2.transform.position;
+        _mugs.ForEach(x => x.OnReset());
     }
 
-    public void MoveShellUp()
+
+    public Tween PrepareBall(Ball ball)
     {
-        Vector3 destination = new Vector3(transform.position.x, transform.position.y + 30, transform.position.z);
-        transform.DOMove(destination, 2f).OnComplete(setUpTrue);
+        return SelectRandomMug().AddBall(ball);
     }
 
-    public void MoveShellDown()
-    {
-        Vector3 destination = new Vector3(transform.position.x, transform.position.y - 30, transform.position.z);
-        transform.DOMove(destination, 2f).OnComplete(setUpFalse);
-    }
+    private Mug SelectRandomMug() => _mugs[Random.Range(0, _mugs.Count)];
 
-    public void Mix01()
+    public async UniTask MixMugsAsync()
     {
-        transform.DOMove(shell1position, 1f);
-    }
-    
-    public void Mix02()
-    {
-        transform.DOMove(shell2position, 1f);
-    }
-
-    public void setUpTrue()
-    {
-        up = true;
-    }
-    
-    public void setUpFalse()
-    {
-        up = false;
-    }
-
-    public void Restart()
-    {
-        transform.DOMove(startposition, 2f);
+        for (var i = 0; i < Random.Range(10, 20); i++)
+        {
+            var second = SelectRandomMug();
+            var first = SelectRandomMug();
+            while (first == second)
+                second = SelectRandomMug();
+            second.MixMove(first.Position);
+            await first.MixMove(second.Position).AsyncWaitForCompletion();
+        }
     }
 }
