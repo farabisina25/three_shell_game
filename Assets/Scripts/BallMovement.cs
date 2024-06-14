@@ -3,10 +3,13 @@ using DG.Tweening;
 
 public class BallMovement : MonoBehaviour
 {
+    public ShellMovement shell;
+    public ShellMovement1 shell1;
+    public ShellMovement2 shell2;
+    
+    public Vector3 startposition;
     public Vector3 ShellPosition;
-
     public Vector3 Shell1Position;
-
     public Vector3 Shell2Position;
     public bool mid = false;
     public int randomValue;
@@ -15,29 +18,12 @@ public class BallMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ShellPosition = FindObjectOfType<ShellMovement>().transform.position;
-        Shell1Position = FindObjectOfType<ShellMovement1>().transform.position;
-        Shell2Position = FindObjectOfType<ShellMovement2>().transform.position;
-        randomValue = Random.Range(0,3);
+        startposition = transform.position;
+        ShellPosition = shell.transform.position;
+        Shell1Position = shell1.transform.position;
+        Shell2Position = shell2.transform.position;
         mixcount = 0;
-        
-        if (randomValue == 0)
-        {
-            FindObjectOfType<ShellMovement1>().MoveShellUp();
-            Invoke("BallGoLeft", 1f);
-        }
-
-        if (randomValue == 1)
-        {
-            FindObjectOfType<ShellMovement>().MoveShellUp();
-            Invoke("BallGoMid", 1f);
-        }
-        if (randomValue == 2)
-        {
-            FindObjectOfType<ShellMovement2>().MoveShellUp();
-            Invoke("BallGoRight", 1f);
-        }
-        
+        RandomGo();
     }
     void FixedUpdate()
     {
@@ -45,30 +31,30 @@ public class BallMovement : MonoBehaviour
         {
             if (mixcount == 0)
             {
-                FindObjectOfType<ShellMovement1>().Invoke("MoveShellDown", 2f);
+                shell1.Invoke("MoveShellDown", 1.5f);
                 mixcount++;
             }
             if (mixcount == 1)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix01",4f);
-                FindObjectOfType<ShellMovement1>().Invoke("Mix10",4f);
-                Invoke("BallGoMid", 4f);
+                shell.Invoke("Mix01",3f);
+                shell1.Invoke("Mix10",3f);
+                Invoke("BallGoMid", 3f);
                 mixcount++;
             }
 
             if (mixcount == 2)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix02",6f);
-                FindObjectOfType<ShellMovement2>().Invoke("Mix21",6f);
+                shell.Invoke("Mix02",4f);
+                shell2.Invoke("Mix21",4f);
                 mixcount++;
             }
 
             if (mixcount == 3)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix01",8f);
-                FindObjectOfType<ShellMovement2>().Invoke("Mix20",8f);
-                FindObjectOfType<ShellMovement1>().Invoke("Mix12",8f);
-                Invoke("BallGoRight", 8f);
+                shell.Invoke("Mix01",5f);
+                shell2.Invoke("Mix20",5f);
+                shell1.Invoke("Mix12",5f);
+                Invoke("BallGoRight", 5f);
                 mixcount++;
             }
         }
@@ -77,31 +63,31 @@ public class BallMovement : MonoBehaviour
         {
             if (mixcount == 0)
             {
-                FindObjectOfType<ShellMovement>().Invoke("MoveShellDown", 2f);
+                shell.Invoke("MoveShellDown", 1.5f);
                 mixcount++;
             }
             if (mixcount == 1)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix01",4f);
-                FindObjectOfType<ShellMovement1>().Invoke("Mix10",4f);
-                Invoke("BallGoLeft", 4);
+                shell.Invoke("Mix01",3f);
+                shell1.Invoke("Mix10",3f);
+                Invoke("BallGoLeft", 3f);
                 mixcount++;
             }
 
             if (mixcount == 2)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix02",6f);
-                FindObjectOfType<ShellMovement2>().Invoke("Mix21",6f);
-                Invoke("BallGoRight", 6f);
+                shell.Invoke("Mix02",4f);
+                shell2.Invoke("Mix21",4f);
+                Invoke("BallGoRight", 4f);
                 mixcount++;
             }
 
             if (mixcount == 3)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix01",8f);
-                FindObjectOfType<ShellMovement2>().Invoke("Mix20",8f);
-                FindObjectOfType<ShellMovement1>().Invoke("Mix12",8f);
-                Invoke("BallGoLeft", 8f);
+                shell.Invoke("Mix01",5f);
+                shell2.Invoke("Mix20",5f);
+                shell1.Invoke("Mix12",5f);
+                Invoke("BallGoLeft", 5f);
                 mixcount++;
             }
         }
@@ -110,35 +96,55 @@ public class BallMovement : MonoBehaviour
         {
             if (mixcount == 0)
             {
-                FindObjectOfType<ShellMovement2>().Invoke("MoveShellDown", 2f);
+                shell2.Invoke("MoveShellDown", 1.5f);
                 mixcount++;
             }
             if (mixcount == 1)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix01",4f);
-                FindObjectOfType<ShellMovement1>().Invoke("Mix10",4f);
+                shell.Invoke("Mix01",3f);
+                shell1.Invoke("Mix10",3f);
                 mixcount++;
             }
 
             if (mixcount == 2)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix02",6f);
-                FindObjectOfType<ShellMovement2>().Invoke("Mix21",6f);
-                Invoke("BallGoLeft", 6f);
+                shell.Invoke("Mix02",4f);
+                shell2.Invoke("Mix21",4f);
+                Invoke("BallGoLeft", 4f);
                 mixcount++;
             }
 
             if (mixcount == 3)
             {
-                FindObjectOfType<ShellMovement>().Invoke("Mix01",8f);
-                FindObjectOfType<ShellMovement2>().Invoke("Mix20",8f);
-                FindObjectOfType<ShellMovement1>().Invoke("Mix12",8f);
-                Invoke("BallGoMid", 8f);
+                shell.Invoke("Mix01",5f);
+                shell2.Invoke("Mix20",5f);
+                shell1.Invoke("Mix12",5f);
+                Invoke("BallGoMid", 5f);
                 mixcount++;
             }
         }
     }
-    
+
+    void RandomGo()
+    {
+        randomValue = Random.Range(0,3);
+        if (randomValue == 0)
+        {
+            shell1.MoveShellUp();
+            Invoke("BallGoLeft", 1f);
+        }
+
+        if (randomValue == 1)
+        {
+            shell.MoveShellUp();
+            Invoke("BallGoMid", 1f);
+        }
+        if (randomValue == 2)
+        {
+            shell2.MoveShellUp();
+            Invoke("BallGoRight", 1f);
+        }
+    }
 
     void BallGoMid()
     {
@@ -156,5 +162,17 @@ public class BallMovement : MonoBehaviour
     {
         transform.DOMove(new Vector3(40f, 3f, 0), 1f);
         mid = false;
+    }
+    
+    public void Restart()
+    {
+        transform.DOMove(startposition, 2f);
+        Invoke("RandomGo", 3f);
+        Invoke("ResetMix" , 4f);
+    }
+
+    public void ResetMix()
+    {
+        mixcount = 0;
     }
 }

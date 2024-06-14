@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ClickShell : MonoBehaviour
 {
-    // Update is called once per frame
+    public BallMovement ball;
+    public ShellMovement shell;
+    public ShellMovement1 shell1;
+    public ShellMovement2 shell2;
+    public GameManager game;
+    
     void Update()
     {
         // Check if the left mouse button was clicked
@@ -31,17 +36,39 @@ public class ClickShell : MonoBehaviour
         if (gameObject.name.Equals("Shell"))
         {
             gameObject.GetComponent<ShellMovement>().MoveShellUp();
+            if (ball.transform.position.x == shell.transform.position.x)
+            {
+                game.Success();
+            }
+            else
+            {
+                game.Loss();
+            }
         }
         if (gameObject.name.Equals("Shell(1)"))
         {
             gameObject.GetComponent<ShellMovement1>().MoveShellUp();
+            if (ball.transform.position.x == shell1.transform.position.x)
+            {
+                game.Success();
+            }
+            else
+            {
+                game.Loss();
+            }
+            
         }
         if (gameObject.name.Equals("Shell(2)"))
         {
             gameObject.GetComponent<ShellMovement2>().MoveShellUp();
+            if (ball.transform.position.x == shell2.transform.position.x)
+            {
+                game.Success();
+            }
+            else
+            {
+                game.Loss();
+            }
         }
-        
-        //Debug.Log("Object clicked: " + gameObject.name);
-        // Add any additional logic you want to execute when the object is clicked
     }
 }

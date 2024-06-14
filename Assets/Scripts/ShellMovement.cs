@@ -2,6 +2,10 @@ using UnityEngine;
 using DG.Tweening;
 public class ShellMovement : MonoBehaviour
 {
+    public ShellMovement1 shell1;
+    public ShellMovement2 shell2;
+    
+    public Vector3 startposition;
     public Vector3 shell1position;
     public Vector3 shell2position;
     public bool up = false;
@@ -9,8 +13,9 @@ public class ShellMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shell1position = FindObjectOfType<ShellMovement1>().transform.position;
-        shell2position = FindObjectOfType<ShellMovement2>().transform.position;
+        startposition = transform.position;
+        shell1position = shell1.transform.position;
+        shell2position = shell2.transform.position;
     }
 
     public void MoveShellUp()
@@ -43,5 +48,10 @@ public class ShellMovement : MonoBehaviour
     public void setUpFalse()
     {
         up = false;
+    }
+
+    public void Restart()
+    {
+        transform.DOMove(startposition, 2f);
     }
 }
