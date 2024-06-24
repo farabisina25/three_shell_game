@@ -26,7 +26,7 @@ public class TouchManager : MonoBehaviour
                 // Check if the object hit by the raycast is this object
                 if (hit.collider.TryGetComponent<Mug>(out var comp))
                 {
-                    OnObjectClicked(comp);
+                    OnObjectClicked(comp).Forget();
                 }
             }
         }
